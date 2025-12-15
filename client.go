@@ -20,8 +20,6 @@ func NewClient(client *http.Client) *Client {
 		header: map[string]string{
 			"User-Agent":                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36",
 			"Origin":                     "https://chzzk.naver.com",
-			"Referer":                    "https://chzzk.naver.com",
-			"Accept":                     "application/json, text/plain, */*",
 			"Deviceid":                   uuid.New().String(),
 			"Front-Client-Platform-Type": "PC",
 			"Front-Client-Product-Type":  "web",

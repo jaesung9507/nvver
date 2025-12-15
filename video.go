@@ -73,12 +73,12 @@ func (c *Client) GetVideo(videoNo int64) (*VideoResp, error) {
 		return nil, fmt.Errorf("failed to new request: %w", err)
 	}
 
-	c.header["Accept"] = "application/json, text/plain, */*"
-	c.header["Referer"] = fmt.Sprintf("https://chzzk.naver.com/video/%d", videoNo)
+	req.Header.Set("Accept", "application/json, text/plain, */*")
+	req.Header.Set("Referer", fmt.Sprintf("https://chzzk.naver.com/video/%d", videoNo))
 
 	resp, err := c.do(req)
 	if err != nil {
-		return nil, fmt.Errorf("failed to reuqest: %w", err)
+		return nil, fmt.Errorf("failed to request: %w", err)
 	}
 	defer resp.Body.Close()
 
@@ -101,12 +101,12 @@ func (c *Client) GetVideoMP4URL(videoNo int64, videoID, inKey string) (map[strin
 		return nil, fmt.Errorf("failed to new request: %w", err)
 	}
 
-	c.header["Accept"] = "application/xml"
-	c.header["Referer"] = fmt.Sprintf("https://chzzk.naver.com/video/%d", videoNo)
+	req.Header.Set("Accept", "application/xml")
+	req.Header.Set("Referer", fmt.Sprintf("https://chzzk.naver.com/video/%d", videoNo))
 
 	resp, err := c.do(req)
 	if err != nil {
-		return nil, fmt.Errorf("failed to reuqest: %w", err)
+		return nil, fmt.Errorf("failed to request: %w", err)
 	}
 	defer resp.Body.Close()
 

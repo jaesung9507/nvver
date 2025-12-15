@@ -62,12 +62,12 @@ func (c *Client) GetLiveStatus(channelID string) (*LiveStatusResp, error) {
 		return nil, fmt.Errorf("failed to new request: %w", err)
 	}
 
-	c.header["Accept"] = "application/json, text/plain, */*"
-	c.header["Referer"] = fmt.Sprintf("https://chzzk.naver.com/live/%s", channelID)
+	req.Header.Set("Accept", "application/json, text/plain, */*")
+	req.Header.Set("Referer", fmt.Sprintf("https://chzzk.naver.com/live/%s", channelID))
 
 	resp, err := c.do(req)
 	if err != nil {
-		return nil, fmt.Errorf("failed to reuqest: %w", err)
+		return nil, fmt.Errorf("failed to request: %w", err)
 	}
 	defer resp.Body.Close()
 
@@ -150,12 +150,12 @@ func (c *Client) GetLiveDetail(channelID string) (*LiveDetailResp, error) {
 		return nil, fmt.Errorf("failed to new request: %w", err)
 	}
 
-	c.header["Accept"] = "application/json, text/plain, */*"
-	c.header["Referer"] = fmt.Sprintf("https://chzzk.naver.com/live/%s", channelID)
+	req.Header.Set("Accept", "application/json, text/plain, */*")
+	req.Header.Set("Referer", fmt.Sprintf("https://chzzk.naver.com/live/%s", channelID))
 
 	resp, err := c.do(req)
 	if err != nil {
-		return nil, fmt.Errorf("failed to reuqest: %w", err)
+		return nil, fmt.Errorf("failed to request: %w", err)
 	}
 	defer resp.Body.Close()
 
