@@ -1,4 +1,4 @@
-module github.com/jaesung9507/chzzk
+module github.com/jaesung9507/nvver
 
 go 1.25.0
 

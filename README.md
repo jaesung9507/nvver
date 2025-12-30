@@ -1,15 +1,25 @@
-# Chzzk
-Unofficial CHZZK API client for Go
+# NVVER
+**NVVER** is an unofficial NAVER video API client for Go
+
+## Supported Services
+### CHZZK
+- [x] Live
+- [x] Clip
+- [x] Video
+### NAVER TV
+- [x] Live
+- [x] Clip
+- [ ] Video
 
 ## Example
-Get HLS URL from the live detail endpoint:
+Get HLS URL from a CHZZK live stream:
 ```go
 package main
 
 import (
 	"fmt"
 
-	"github.com/jaesung9507/chzzk"
+	"github.com/jaesung9507/nvver/chzzk"
 )
 
 func main() {
@@ -30,9 +40,9 @@ func main() {
 ```
 
 ## Disclaimer
-This Go client uses unofficial APIs of NAVER CHZZK and is not affiliated with them in any way.
+This Go client uses unofficial APIs of NAVER and is not affiliated with them in any way.
 
-CHZZK may change or disable these APIs at any time, which may cause this client to stop working without notice.
+NAVER may change or disable these APIs at any time, which may cause this client to stop working without notice.
 
 ## License
 MIT License

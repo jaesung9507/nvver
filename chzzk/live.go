@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"github.com/jaesung9507/nvver"
 )
 
 type LiveStatusResp struct {
@@ -65,7 +67,7 @@ func (c *Client) GetLiveStatus(channelID string) (*LiveStatusResp, error) {
 	req.Header.Set("Accept", "application/json, text/plain, */*")
 	req.Header.Set("Referer", fmt.Sprintf("https://chzzk.naver.com/live/%s", channelID))
 
-	resp, err := c.do(req)
+	resp, err := c.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to request: %w", err)
 	}
@@ -134,8 +136,8 @@ type LiveDetailResp struct {
 	} `json:"content"`
 }
 
-func (r *LiveDetailResp) GetLivePlayback() (*Playback, error) {
-	result := &Playback{}
+func (r *LiveDetailResp) GetLivePlayback() (*nvver.Playback, error) {
+	result := &nvver.Playback{}
 	if err := json.Unmarshal([]byte(r.Content.LivePlaybackJson), result); err != nil {
 		return nil, err
 	}
@@ -153,7 +155,7 @@ func (c *Client) GetLiveDetail(channelID string) (*LiveDetailResp, error) {
 	req.Header.Set("Accept", "application/json, text/plain, */*")
 	req.Header.Set("Referer", fmt.Sprintf("https://chzzk.naver.com/live/%s", channelID))
 
-	resp, err := c.do(req)
+	resp, err := c.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to request: %w", err)
 	}

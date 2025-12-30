@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
+
+	"github.com/jaesung9507/nvver"
 )
 
 type VideoResp struct {
@@ -53,12 +55,12 @@ type VideoResp struct {
 	} `json:"content"`
 }
 
-func (r *VideoResp) GetLiveRewindPlayback() (*Playback, error) {
+func (r *VideoResp) GetLiveRewindPlayback() (*nvver.Playback, error) {
 	if r.Content.LiveRewindPlaybackJson == nil {
 		return nil, errors.New("live rewind playback is nil")
 	}
 
-	result := &Playback{}
+	result := &nvver.Playback{}
 	if err := json.Unmarshal([]byte(*r.Content.LiveRewindPlaybackJson), result); err != nil {
 		return nil, err
 	}
@@ -76,7 +78,7 @@ func (c *Client) GetVideo(videoNo int64) (*VideoResp, error) {
 	req.Header.Set("Accept", "application/json, text/plain, */*")
 	req.Header.Set("Referer", fmt.Sprintf("https://chzzk.naver.com/video/%d", videoNo))
 
-	resp, err := c.do(req)
+	resp, err := c.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to request: %w", err)
 	}
@@ -104,7 +106,7 @@ func (c *Client) GetVideoMP4URL(videoNo int64, videoID, inKey string) (map[strin
 	req.Header.Set("Accept", "application/xml")
 	req.Header.Set("Referer", fmt.Sprintf("https://chzzk.naver.com/video/%d", videoNo))
 
-	resp, err := c.do(req)
+	resp, err := c.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("failed to request: %w", err)
 	}

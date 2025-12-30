@@ -1,11 +1,11 @@
-package chzzk
+package nvver
 
 type Playback struct {
 	Meta struct {
-		VideoId   string `json:"videoId"`
-		StreamSeq int64  `json:"streamSeq"`
-		LiveId    string `json:"liveId"`
-		PaidLive  bool   `json:"paidLive"`
+		VideoId   string  `json:"videoId"`
+		StreamSeq float64 `json:"streamSeq"`
+		LiveId    string  `json:"liveId"`
+		PaidLive  bool    `json:"paidLive"`
 		CDNInfo   struct {
 			CDNType string `json:"cdnType"`
 		} `json:"cdnInfo"`
