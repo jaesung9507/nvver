@@ -9,7 +9,7 @@
 ### NAVER TV
 - [x] Live
 - [x] Clip
-- [ ] Video
+- [x] VOD
 
 ## Example
 Get HLS URL from a CHZZK live stream:
@@ -43,6 +43,10 @@ func main() {
 This Go client uses unofficial APIs of NAVER and is not affiliated with them in any way.
 
 NAVER may change or disable these APIs at any time, which may cause this client to stop working without notice.
+
+This package does **not provide any backward compatibility guarantees**.
+
+Breaking changes may be introduced at any time.
 
 ## License
 MIT License

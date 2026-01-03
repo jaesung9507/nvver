@@ -4,10 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"net/http"
-	"regexp"
-	"strings"
 
 	"github.com/jaesung9507/nvver"
 )
@@ -96,43 +93,8 @@ func (c *Client) GetVideo(videoNo int64) (*VideoResp, error) {
 	return result, nil
 }
 
-func (c *Client) GetVideoMP4URL(videoNo int64, videoID, inKey string) (map[string]string, error) {
-	url := fmt.Sprintf("https://apis.naver.com/neonplayer/vodplay/v3/playback/%s?key=%s", videoID, inKey)
-	req, err := http.NewRequest(http.MethodGet, url, nil)
-	if err != nil {
-		return nil, fmt.Errorf("failed to new request: %w", err)
-	}
-
-	req.Header.Set("Accept", "application/xml")
-	req.Header.Set("Referer", fmt.Sprintf("https://chzzk.naver.com/video/%d", videoNo))
-
-	resp, err := c.Do(req)
-	if err != nil {
-		return nil, fmt.Errorf("failed to request: %w", err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("status code: %d", resp.StatusCode)
-	}
-
-	mpd, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read body: %w", err)
-	}
-
-	result := make(map[string]string)
-	matches := regexp.MustCompile(
-		`(?s)<Representation[^>]*id="([^"]+)"[^>]*>.*?<BaseURL>(.*?)</BaseURL>.*?</Representation>`,
-	).FindAllStringSubmatch(string(mpd), -1)
-
-	for _, m := range matches {
-		if len(m) == 3 {
-			if strings.Contains(m[2], ".mp4") {
-				result[strings.TrimSpace(m[1])] = strings.TrimSpace(m[2])
-			}
-		}
-	}
-
-	return result, err
+func (c *Client) GetVideoURL(videoNo int64, videoID, inKey string) (map[string]string, error) {
+	return nvver.GetVODURL(c, videoID, inKey, map[string]string{
+		"Referer": fmt.Sprintf("https://chzzk.naver.com/video/%d", videoNo),
+	})
 }
