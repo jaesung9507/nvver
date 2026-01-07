@@ -10,6 +10,9 @@
 - [x] Live
 - [x] Clip
 - [x] VOD
+### NAVER Shopping LIVE
+- [x] Live
+- [x] Short Clip
 
 ## Example
 Get HLS URL from a CHZZK live stream:
