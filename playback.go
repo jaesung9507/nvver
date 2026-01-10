@@ -2,9 +2,9 @@ package nvver
 
 type Playback struct {
 	Meta struct {
-		VideoId   string  `json:"videoId"`
+		VideoID   string  `json:"videoId"`
 		StreamSeq float64 `json:"streamSeq"`
-		LiveId    string  `json:"liveId"`
+		LiveID    string  `json:"liveId"`
 		PaidLive  bool    `json:"paidLive"`
 		CDNInfo   struct {
 			CDNType string `json:"cdnType"`
@@ -28,12 +28,12 @@ type Playback struct {
 		Path string `json:"path"`
 	} `json:"api"`
 	Media []struct {
-		MediaId       string `json:"mediaId"`
+		MediaID       string `json:"mediaId"`
 		Protocol      string `json:"protocol"`
 		Path          string `json:"path"`
 		Latency       string `json:"latency,omitempty"`
 		EncodingTrack []struct {
-			EncodingTrackId    string `json:"encodingTrackId"`
+			EncodingTrackID    string `json:"encodingTrackId"`
 			Path               string `json:"path,omitempty"`
 			VideoProfile       string `json:"videoProfile,omitempty"`
 			AudioProfile       string `json:"audioProfile,omitempty"`
@@ -72,12 +72,21 @@ type Playback struct {
 	Multiview *[]struct{} `json:"multiview,omitempty"`
 }
 
-func (i *Playback) GetHLSPath() string {
+func (i *Playback) pathByMediaID(id string) (path string) {
 	for _, media := range i.Media {
-		if media.MediaId == "HLS" {
-			return media.Path
+		if media.MediaID == id {
+			path = media.Path
+			break
 		}
 	}
 
-	return ""
+	return path
+}
+
+func (i *Playback) HLSPath() (path string) {
+	return i.pathByMediaID("HLS")
+}
+
+func (i *Playback) LowLatencyHLSPath() (path string) {
+	return i.pathByMediaID("LLHLS")
 }

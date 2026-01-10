@@ -14,7 +14,7 @@ type VideoResp struct {
 	Message any `json:"message"`
 	Content struct {
 		VideoNo                int64    `json:"videoNo"`
-		VideoId                string   `json:"videoId"`
+		VideoID                string   `json:"videoId"`
 		VideoTitle             string   `json:"videoTitle"`
 		VideoType              string   `json:"videoType"`
 		PublishDate            string   `json:"publishDate"`

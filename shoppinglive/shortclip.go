@@ -11,14 +11,14 @@ import (
 	"github.com/jaesung9507/nvver"
 )
 
-type ClipInfo struct {
+type ShortClipInfo struct {
 	ShortClipID int64  `json:"shortclipId"`
 	Status      string `json:"status"`
 	VID         string `json:"vid"`
 	VODMediaURL string `json:"vodMediaUrl"`
 }
 
-func (c *Client) GetShortClipInfo(shortClipID int64) (*ClipInfo, error) {
+func (c *Client) GetShortClipInfo(shortClipID int64) (*ShortClipInfo, error) {
 	url := fmt.Sprintf("https://view.shoppinglive.naver.com/shortclips/%d", shortClipID)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -46,7 +46,7 @@ func (c *Client) GetShortClipInfo(shortClipID int64) (*ClipInfo, error) {
 		return nil, fmt.Errorf("failed to unmarshal raw: %w", err)
 	}
 
-	result := &ClipInfo{}
+	result := &ShortClipInfo{}
 	if err = json.Unmarshal([]byte(raw), result); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal data: %w", err)
 	}

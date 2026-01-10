@@ -40,7 +40,8 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println("HLS URL:", playback.GetHLSPath())
+	fmt.Println("HLS URL:", playback.HLSPath())
+	fmt.Println("LL-HLS URL:", playback.LowLatencyHLSPath())
 }
 ```
 
