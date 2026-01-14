@@ -22,8 +22,8 @@ type VODInfo struct {
 		AuthType    string   `json:"authType"`
 		ChannelURL  string   `json:"channelUrl"`
 		AdultVideo  bool     `json:"adultVideo"`
-		ChannelId   string   `json:"channelId"`
-		VideoId     string   `json:"videoId"`
+		ChannelID   string   `json:"channelId"`
+		VideoID     string   `json:"videoId"`
 	} `json:"clip"`
 	Play struct {
 		InKey    string `json:"inKey"`

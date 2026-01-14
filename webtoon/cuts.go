@@ -12,7 +12,7 @@ import (
 )
 
 type CutsInfo struct {
-	ServiceTicketId string `json:"serviceTicketId"`
+	ServiceTicketID string `json:"serviceTicketId"`
 	PageID          string `json:"pageId"`
 	PageGroupID     string `json:"pageGroupId"`
 	PageName        string `json:"pageName"`

@@ -37,7 +37,7 @@ func (c *Client) GetClipVideoID(clipNo int64) (string, error) {
 		Props struct {
 			PageProps struct {
 				ClipInfo struct {
-					VideoId string `json:"videoId"`
+					VideoID string `json:"videoId"`
 				} `json:"clipInfo"`
 			} `json:"pageProps"`
 		} `json:"props"`
@@ -46,12 +46,12 @@ func (c *Client) GetClipVideoID(clipNo int64) (string, error) {
 		return "", fmt.Errorf("failed to unmarshal data: %w", err)
 	}
 
-	videoId := result.Props.PageProps.ClipInfo.VideoId
-	if len(videoId) <= 0 {
+	videoID := result.Props.PageProps.ClipInfo.VideoID
+	if len(videoID) <= 0 {
 		return "", fmt.Errorf("not found video id: %s", string(m[1]))
 	}
 
-	return videoId, nil
+	return videoID, nil
 }
 
 func (c *Client) GetClipMP4URL(videoID string) (map[string]string, error) {
