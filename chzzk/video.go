@@ -93,7 +93,7 @@ func (c *Client) GetVideoInfo(videoNo int64) (*VideoInfo, error) {
 	return &result.Content, nil
 }
 
-func (c *Client) GetVideoURL(videoNo int64, videoID, inKey string) (map[string]string, error) {
+func (c *Client) GetVideoURL(videoNo int64, videoID, inKey string) (map[string]nvver.VODInfo, error) {
 	return nvver.GetVODURL(c, videoID, inKey, map[string]string{
 		"Referer": fmt.Sprintf("https://chzzk.naver.com/video/%d", videoNo),
 	})

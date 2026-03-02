@@ -99,7 +99,7 @@ func (c *Client) GetCutsInfo(contentID string) (*CutsInfo, error) {
 	return &result.Result.Post, nil
 }
 
-func (c *Client) GetCutsURL(contentID, assetID, token string) (map[string]string, error) {
+func (c *Client) GetCutsURL(contentID, assetID, token string) (map[string]nvver.VODInfo, error) {
 	if c.client.Jar == nil {
 		return nil, errors.New("cookie jar is required")
 	}

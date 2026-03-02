@@ -54,7 +54,7 @@ func (c *Client) GetShortClipInfo(shortClipID int64) (*ShortClipInfo, error) {
 	return result, nil
 }
 
-func (c *Client) GetShortClipURL(shortClipID int64, vodMediaURL string) (map[string]string, error) {
+func (c *Client) GetShortClipURL(shortClipID int64, vodMediaURL string) (map[string]nvver.VODInfo, error) {
 	u, err := url.Parse(vodMediaURL)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse vod media url: %w", err)

@@ -6,7 +6,16 @@ import (
 	"net/http"
 )
 
-func GetVODURL(c Client, videoID, inKey string, header map[string]string) (map[string]string, error) {
+type VODInfo struct {
+	Bandwidth int
+	Width     int
+	Height    int
+	FrameRate int
+	Codecs    string
+	URL       string
+}
+
+func GetVODURL(c Client, videoID, inKey string, header map[string]string) (map[string]VODInfo, error) {
 	url := fmt.Sprintf("https://apis.naver.com/neonplayer/vodplay/v3/playback/%s?key=%s", videoID, inKey)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
@@ -32,9 +41,14 @@ func GetVODURL(c Client, videoID, inKey string, header map[string]string) (map[s
 		Periods []struct {
 			AdaptationSets []struct {
 				Representations []struct {
-					ID      string `xml:"id,attr"`
-					BaseURL string `xml:"BaseURL"`
-					M3U     string `xml:"m3u,attr"`
+					ID        string `xml:"id,attr"`
+					Bandwidth int    `xml:"bandwidth,attr"`
+					Width     int    `xml:"width,attr"`
+					Height    int    `xml:"height,attr"`
+					FrameRate int    `xml:"frameRate,attr"`
+					Codecs    string `xml:"codecs,attr"`
+					BaseURL   string `xml:"BaseURL"`
+					M3U       string `xml:"m3u,attr"`
 				} `xml:"Representation"`
 			} `xml:"AdaptationSet"`
 		} `xml:"Period"`
@@ -43,14 +57,23 @@ func GetVODURL(c Client, videoID, inKey string, header map[string]string) (map[s
 		return nil, fmt.Errorf("failed to decode xml: %w", err)
 	}
 
-	result := make(map[string]string)
+	result := make(map[string]VODInfo)
 	for _, p := range data.Periods {
 		for _, as := range p.AdaptationSets {
 			for _, rep := range as.Representations {
+				vod := VODInfo{
+					Bandwidth: rep.Bandwidth,
+					Width:     rep.Width,
+					Height:    rep.Height,
+					FrameRate: rep.FrameRate,
+					Codecs:    rep.Codecs,
+				}
 				if rep.M3U != "" {
-					result[rep.ID] = rep.M3U
+					vod.URL = rep.M3U
+					result[rep.ID] = vod
 				} else if rep.BaseURL != "" {
-					result[rep.ID] = rep.BaseURL
+					vod.URL = rep.BaseURL
+					result[rep.ID] = vod
 				}
 			}
 		}

@@ -68,7 +68,7 @@ func (c *Client) GetVODInfo(clipNo int64) (*VODInfo, error) {
 	return &result.Props.PageProps.VOD, nil
 }
 
-func (c *Client) GetVODURL(clipNo int64, videoID, inKey string) (map[string]string, error) {
+func (c *Client) GetVODURL(clipNo int64, videoID, inKey string) (map[string]nvver.VODInfo, error) {
 	return nvver.GetVODURL(c, videoID, inKey, map[string]string{
 		"Referer": fmt.Sprintf("https://tv.naver.com/v/%d", clipNo),
 	})
