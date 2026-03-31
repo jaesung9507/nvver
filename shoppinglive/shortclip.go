@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
+	"strings"
 
 	"github.com/jaesung9507/nvver"
 )
@@ -36,13 +37,13 @@ func (c *Client) GetShortClipInfo(shortClipID int64) (*ShortClipInfo, error) {
 		return nil, fmt.Errorf("failed to read body: %w", err)
 	}
 
-	m := regexp.MustCompile(`window\.__shortclip\s*=\s*'([^']*)'`).FindSubmatch(data)
+	m := regexp.MustCompile(`window\.__shortclip\s*=\s*'((?:\\'|[^'])*)'`).FindSubmatch(data)
 	if len(m) < 2 {
 		return nil, fmt.Errorf("not found broadcast: content-length=%d", len(data))
 	}
 
 	var raw string
-	if err = json.Unmarshal(fmt.Appendf(nil, `"%s"`, m[1]), &raw); err != nil {
+	if err = json.Unmarshal(fmt.Appendf(nil, `"%s"`, strings.ReplaceAll(string(m[1]), "\\'", "'")), &raw); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal raw: %w", err)
 	}
 
