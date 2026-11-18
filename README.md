@@ -6,10 +6,10 @@
 - [x] Live
 - [x] Clip
 - [x] Video
-### NAVER TV
-- [x] Live
-- [x] Clip
-- [x] VOD
+### ~~NAVER TV~~ (Discontinued)
+- [x] ~~Live~~
+- [x] ~~Clip~~
+- [x] ~~VOD~~
 ### Shopping LIVE
 - [x] Live
 - [x] Short Clip
